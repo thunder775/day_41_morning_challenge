@@ -16,9 +16,7 @@ List<List<List<int>>> possibleMoves(List<List<int>> input) {
       if (i != j) {
         if (canBeStacked(input[i], input[j])) {
           input[j].insert(0, input[i].removeAt(0));
-
           addToOutputList(output, input);
-
           input[i].insert(0, input[j].removeAt(0));
         }
       }
@@ -28,28 +26,25 @@ List<List<List<int>>> possibleMoves(List<List<int>> input) {
 }
 
 checkWinInNMoves(List<List<int>> input, int n) {
-//  List<List<List<int>>> output =[];
+//  List<List<List<int>>> output = [];
   List<List<List<int>>> allMoves = possibleMoves(input);
   if (n == 1) {
     return checkWinInOneMove(input);
   }
   for (var move in allMoves) {
     if (checkWinInNMoves(move, n - 1) != null) {
-      print(move);
-//    output.addAll(checkWinInNMoves(input, n-1));
       return move;
     }
   }
-//  return output;
-return null;
+
+  return null;
 }
 
 List<List<int>> checkWinInOneMove(List<List<int>> input) {
-
   List<List<List<int>>> allMoves = possibleMoves(input);
   for (var move in allMoves) {
     if (isFinalMove(move)) {
-      print(move);
+//      print(move);
       return move;
     }
   }
@@ -84,9 +79,16 @@ main() {
 //    [1, 2],
 //    [3, 4]
 //  ], 3));
-  print(checkWinInNMoves([
-    [1,2,3,4],
-    [],
-    []
-  ], 15));
+//  print(checkWinInNMoves([
+//    [1, 2, 3, 4],
+//    [],
+//    []
+//  ], 15));
+  List<List<int>> currentMove = [[1, 2, 3, 4], [], []];
+  int n = 15;
+  while (currentMove!=null&&!isFinalMove(currentMove)) {
+    currentMove = checkWinInNMoves(currentMove, n);
+    print(currentMove);
+    n--;
+  }
 }
